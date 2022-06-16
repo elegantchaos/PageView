@@ -8,7 +8,7 @@ public struct PageView<SelectionValue, Content, Index>: View where SelectionValu
     let indexAlignment: Alignment
     let indexPadding: CGFloat?
     
-    internal init(selection: Binding<SelectionValue>, indexAlignment: Alignment = .bottom, indexPadding: CGFloat? = nil, content: @escaping () -> Content, index: @escaping () -> Index) {
+    public init(selection: Binding<SelectionValue>, indexAlignment: Alignment = .bottom, indexPadding: CGFloat? = nil, content: @escaping () -> Content, index: @escaping () -> Index) {
         self._selection = selection
         self.content = content
         self.index = index
