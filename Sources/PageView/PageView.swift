@@ -44,10 +44,20 @@ struct PreviewCustomPageView: View {
                 DotsIndexView(currentIndex: currentIndex, pageCount: previewColors.count)
             }
             .tabItem {
-                Text("Custom")
+                Text("Leading Dots")
                     .font(.title)
             }
-            
+
+            PageView(selection: $currentIndex, indexAlignment: .top, indexPadding: 40.0) {
+                content
+            } index: {
+                DotsIndexView(currentIndex: currentIndex, pageCount: previewColors.count, selectedScale: 1.6)
+            }
+            .tabItem {
+                Text("Top Dots Growing")
+                    .font(.title)
+            }
+
             TabView(selection: $currentIndex) {
                 ForEach(0..<previewColors.count, id: \.self) { index in
                     previewColors[index]
