@@ -46,8 +46,26 @@ struct PreviewCustomPageView: View {
     }
 }
 
+struct PreviewStandardPageView: View {
+    let colors: [Color] = [.red, .blue, .green, .yellow]
+    @State private var currentIndex = 0
+
+    var body: some View {
+        TabView(selection: $currentIndex) {
+            ForEach(0..<colors.count, id: \.self) { index in
+              colors[index]
+                .tag(index)
+            }
+        }
+        .tabViewStyle(.page)
+    }
+}
+
 struct CustomPageView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewCustomPageView()
+        VStack {
+            PreviewCustomPageView()
+            PreviewStandardPageView()
+        }
     }
 }

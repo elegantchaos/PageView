@@ -19,7 +19,7 @@ public struct DotsIndexView: View {
     let selectedColor: Color
     
     
-    init(currentIndex: Int, pageCount: Int, maxDots: Int? = nil, dotSize: CGFloat = 9, dotSpacing: CGFloat = 12, dotColor: Color = Color.white.opacity(0.6), selectedScale: CGFloat = 1.6, selectedColor: Color = .white) {
+    init(currentIndex: Int, pageCount: Int, maxDots: Int? = nil, dotSize: CGFloat = 8, dotSpacing: CGFloat = 10, dotColor: Color = Color.white.opacity(0.5), selectedScale: CGFloat = 1.6, selectedColor: Color = .white) {
         self.currentIndex = currentIndex
         self.pageCount = pageCount
         self.maxDots = maxDots
