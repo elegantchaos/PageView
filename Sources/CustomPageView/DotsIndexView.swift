@@ -9,7 +9,6 @@ public struct DotsIndexView: View {
     
     let currentIndex: Int
     let pageCount: Int
-    let maxDots: Int?
     
     let dotSize: CGFloat
     let dotSpacing: CGFloat
@@ -19,10 +18,9 @@ public struct DotsIndexView: View {
     let selectedColor: Color
     
     
-    init(currentIndex: Int, pageCount: Int, maxDots: Int? = nil, dotSize: CGFloat = 8, dotSpacing: CGFloat = 10, dotColor: Color = Color.white.opacity(0.5), selectedScale: CGFloat = 1.6, selectedColor: Color = .white) {
+    init(currentIndex: Int, pageCount: Int, dotSize: CGFloat = 8, dotSpacing: CGFloat = 10, dotColor: Color = Color.white.opacity(0.5), selectedScale: CGFloat = 1.0, selectedColor: Color = .white) {
         self.currentIndex = currentIndex
         self.pageCount = pageCount
-        self.maxDots = maxDots
         self.dotSize = dotSize
         self.dotSpacing = dotSpacing
         self.dotColor = dotColor
@@ -32,7 +30,7 @@ public struct DotsIndexView: View {
     
     public var body: some View {
         HStack(spacing: dotSpacing) {
-            ForEach(pageRange, id: \.self) { index in
+            ForEach(0..<pageCount, id: \.self) { index in
                 Circle()
                     .fill(currentIndex == index ? selectedColor : dotColor)
                     .scaleEffect(currentIndex == index ? selectedScale : 1.0)
@@ -43,16 +41,6 @@ public struct DotsIndexView: View {
                 
                     .id(index)
             }
-        }
-    }
-    
-    var pageRange: Range<Int> {
-        if let maxDots = maxDots {
-            let startIndex = currentIndex - (maxDots / 2)
-            let endIndex = startIndex + maxDots
-            return startIndex..<endIndex
-        } else {
-            return 0..<pageCount
         }
     }
 }

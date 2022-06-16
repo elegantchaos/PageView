@@ -30,42 +30,50 @@ public struct PageView<SelectionValue, Content, Index>: View where SelectionValu
     }
 }
 
+private let previewColors: [Color] = [.red, .blue, .green, .yellow, .orange, .gray, .brown, .cyan]
+
 struct PreviewCustomPageView: View {
-    let colors: [Color] = [.red, .blue, .green, .yellow]
     @State private var currentIndex = 0
-    
+    @State var showNormal = false
+
     var body: some View {
-        PageView(selection: $currentIndex, indexAlignment: .bottomLeading, indexPadding: 40.0) {
-            ForEach(0..<colors.count, id: \.self) { index in
-              colors[index]
-                .tag(index)
+        TabView {
+            PageView(selection: $currentIndex, indexAlignment: .bottomLeading, indexPadding: 40.0) {
+                content
+            } index: {
+                DotsIndexView(currentIndex: currentIndex, pageCount: previewColors.count)
             }
-        } index: {
-            DotsIndexView(currentIndex: currentIndex, pageCount: colors.count, selectedScale: 1.0)
+            .tabItem {
+                Text("Custom")
+                    .font(.title)
+            }
+            
+            TabView(selection: $currentIndex) {
+                ForEach(0..<previewColors.count, id: \.self) { index in
+                    previewColors[index]
+                        .tag(index)
+                }
+            }
+            .tabViewStyle(.page)
+            .tabItem {
+                Text("Standard")
+                    .font(.title)
+            }
         }
+        
     }
-}
-
-struct PreviewStandardPageView: View {
-    let colors: [Color] = [.red, .blue, .green, .yellow]
-    @State private var currentIndex = 0
-
-    var body: some View {
-        TabView(selection: $currentIndex) {
-            ForEach(0..<colors.count, id: \.self) { index in
-              colors[index]
+    
+    var content: some View {
+        ForEach(0..<previewColors.count, id: \.self) { index in
+            previewColors[index]
                 .tag(index)
-            }
         }
-        .tabViewStyle(.page)
     }
 }
 
 struct CustomPageView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        VStack {
-            PreviewCustomPageView()
-            PreviewStandardPageView()
-        }
+        PreviewCustomPageView()
     }
 }
