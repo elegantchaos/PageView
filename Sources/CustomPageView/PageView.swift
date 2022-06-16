@@ -41,7 +41,7 @@ struct PreviewCustomPageView: View {
                 .tag(index)
             }
         } index: {
-            FunkyDotsIndexView(currentIndex: currentIndex, pageCount: colors.count)
+            DotsIndexView(currentIndex: currentIndex, pageCount: colors.count, selectedScale: 1.0)
         }
     }
 }
