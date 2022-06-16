@@ -1,3 +1,5 @@
-# CustomPageView
+# PageView
 
-A description of this package.
+This uses TabView with a `.page` tabViewStyle to implement the basic paging behaviour.
+
+However, as well as the view builder for the page content, 
