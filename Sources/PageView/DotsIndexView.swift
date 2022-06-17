@@ -34,16 +34,16 @@ public struct DotsIndexView<SelectionValue>: View where SelectionValue: Hashable
             ForEach(indices, id: \.self) { index in
                 Circle()
                     .fill(index == selectedIndex ? selectedColor : dotColor)
-                    .scaleEffect(index == selectedIndex ? selectedScale : 1.0)
-                    .frame(width: dotSize, height: dotSize)
-                    .transition(AnyTransition.opacity.combined(with: .scale))
-                    .id(index)
+                    .contentShape(Rectangle())
                     .onTapGesture {
-                        print("blah")
                         withAnimation {
                             selection = pages[index]
                         }
                     }
+                    .scaleEffect(index == selectedIndex ? selectedScale : 1.0)
+                    .frame(width: dotSize, height: dotSize)
+                    .transition(AnyTransition.opacity.combined(with: .scale))
+                    .id(index)
             }
         }
     }
