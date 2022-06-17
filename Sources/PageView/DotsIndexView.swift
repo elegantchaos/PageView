@@ -17,7 +17,7 @@ public struct DotsIndexView<SelectionValue>: View where SelectionValue: Hashable
     let selectedScale: CGFloat
     let selectedColor: Color
     
-    public init(selection: Binding<SelectionValue>, pages: [SelectionValue], dotSize: CGFloat = 8, dotSpacing: CGFloat = 10, dotColor: Color = Color.white.opacity(0.5), selectedScale: CGFloat = 1.0, selectedColor: Color = .white) {
+    public init(selection: Binding<SelectionValue>, pages: [SelectionValue], dotSize: CGFloat = 8, dotSpacing: CGFloat = 10, dotColor: Color = Color.primary.opacity(0.2), selectedScale: CGFloat = 1.0, selectedColor: Color = .primary) {
         self._selection = selection
         self.pages = pages
         self.dotSize = dotSize
@@ -38,6 +38,12 @@ public struct DotsIndexView<SelectionValue>: View where SelectionValue: Hashable
                     .frame(width: dotSize, height: dotSize)
                     .transition(AnyTransition.opacity.combined(with: .scale))
                     .id(index)
+                    .onTapGesture {
+                        print("blah")
+                        withAnimation {
+                            selection = pages[index]
+                        }
+                    }
             }
         }
     }
