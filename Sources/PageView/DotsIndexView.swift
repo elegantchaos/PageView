@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-public struct DotsIndexView<SelectionValue>: View where SelectionValue: Hashable, SelectionValue: Identifiable {
+public struct DotsIndexView<SelectionValue>: View where SelectionValue: Hashable {
     @Binding var selection: SelectionValue
     
     let pages: [SelectionValue]
@@ -28,14 +28,16 @@ public struct DotsIndexView<SelectionValue>: View where SelectionValue: Hashable
     }
     
     public var body: some View {
-        HStack(spacing: dotSpacing) {
-            ForEach(pages) { page in
+        let selectedIndex = pages.firstIndex(of: selection)
+        let indices = 0..<pages.count
+        return HStack(spacing: dotSpacing) {
+            ForEach(indices, id: \.self) { index in
                 Circle()
-                    .fill(page == selection ? selectedColor : dotColor)
-                    .scaleEffect(page == selection ? selectedScale : 1.0)
+                    .fill(index == selectedIndex ? selectedColor : dotColor)
+                    .scaleEffect(index == selectedIndex ? selectedScale : 1.0)
                     .frame(width: dotSize, height: dotSize)
                     .transition(AnyTransition.opacity.combined(with: .scale))
-                    .id(page)
+                    .id(index)
             }
         }
     }

@@ -77,9 +77,9 @@ struct PreviewCustomPageView: View {
     }
     
     var content: some View {
-        ForEach(0..<previewColors.count, id: \.self) { index in
-            previewColors[index]
-                .tag(index)
+        ForEach(previewColors) { color in
+            color
+                .tag(color)
         }
     }
 }
