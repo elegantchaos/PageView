@@ -5,10 +5,10 @@
 
 import SwiftUI
 
-public struct DotsIndexView: View {
+public struct DotsIndexView<SelectionValue>: View where SelectionValue: Hashable, SelectionValue: Identifiable {
+    @Binding var selection: SelectionValue
     
-    let currentIndex: Int
-    let pageCount: Int
+    let pages: [SelectionValue]
     
     let dotSize: CGFloat
     let dotSpacing: CGFloat
@@ -17,9 +17,9 @@ public struct DotsIndexView: View {
     let selectedScale: CGFloat
     let selectedColor: Color
     
-    public init(currentIndex: Int, pageCount: Int, dotSize: CGFloat = 8, dotSpacing: CGFloat = 10, dotColor: Color = Color.white.opacity(0.5), selectedScale: CGFloat = 1.0, selectedColor: Color = .white) {
-        self.currentIndex = currentIndex
-        self.pageCount = pageCount
+    public init(selection: Binding<SelectionValue>, pages: [SelectionValue], dotSize: CGFloat = 8, dotSpacing: CGFloat = 10, dotColor: Color = Color.white.opacity(0.5), selectedScale: CGFloat = 1.0, selectedColor: Color = .white) {
+        self._selection = selection
+        self.pages = pages
         self.dotSize = dotSize
         self.dotSpacing = dotSpacing
         self.dotColor = dotColor
@@ -29,16 +29,13 @@ public struct DotsIndexView: View {
     
     public var body: some View {
         HStack(spacing: dotSpacing) {
-            ForEach(0..<pageCount, id: \.self) { index in
+            ForEach(pages) { page in
                 Circle()
-                    .fill(currentIndex == index ? selectedColor : dotColor)
-                    .scaleEffect(currentIndex == index ? selectedScale : 1.0)
-                
+                    .fill(page == selection ? selectedColor : dotColor)
+                    .scaleEffect(page == selection ? selectedScale : 1.0)
                     .frame(width: dotSize, height: dotSize)
-                
                     .transition(AnyTransition.opacity.combined(with: .scale))
-                
-                    .id(index)
+                    .id(page)
             }
         }
     }

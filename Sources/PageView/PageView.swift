@@ -32,36 +32,39 @@ public struct PageView<SelectionValue, Content, Index>: View where SelectionValu
 
 private let previewColors: [Color] = [.red, .blue, .green, .yellow, .orange, .gray, .brown, .cyan]
 
+extension Color: Identifiable {
+    public var id: Color { return self }
+}
 struct PreviewCustomPageView: View {
-    @State private var currentIndex = 0
+    @State private var selection = previewColors.first!
     @State var showNormal = false
 
     var body: some View {
         TabView {
-            PageView(selection: $currentIndex, indexAlignment: .bottomLeading, indexPadding: 40.0) {
+            PageView(selection: $selection, indexAlignment: .bottomLeading, indexPadding: 40.0) {
                 content
             } index: {
-                DotsIndexView(currentIndex: currentIndex, pageCount: previewColors.count)
+                DotsIndexView(selection: $selection, pages: previewColors)
             }
             .tabItem {
                 Text("Leading Dots")
                     .font(.title)
             }
 
-            PageView(selection: $currentIndex, indexAlignment: .top, indexPadding: 40.0) {
+            PageView(selection: $selection, indexAlignment: .top, indexPadding: 40.0) {
                 content
             } index: {
-                DotsIndexView(currentIndex: currentIndex, pageCount: previewColors.count, selectedScale: 1.6)
+                DotsIndexView(selection: $selection, pages: previewColors, selectedScale: 1.6)
             }
             .tabItem {
                 Text("Top Dots Growing")
                     .font(.title)
             }
 
-            TabView(selection: $currentIndex) {
-                ForEach(0..<previewColors.count, id: \.self) { index in
-                    previewColors[index]
-                        .tag(index)
+            TabView(selection: $selection) {
+                ForEach(previewColors) { color in
+                    color
+                        .tag(color)
                 }
             }
             .tabViewStyle(.page)
