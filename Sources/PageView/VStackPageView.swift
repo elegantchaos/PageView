@@ -26,7 +26,6 @@ public struct VStackPageView<SelectionValue, Content, Index>: View where Selecti
                 content()
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            
             index()
                 .padding(.all, indexPadding)
             
