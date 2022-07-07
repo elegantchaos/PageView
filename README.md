@@ -20,3 +20,13 @@ It also allows you to specify the alignment and padding of the index view - so y
         }
         
 ```
+
+## Stacked Variant
+
+By default, `PageView` uses a `ZStack` to place its index view on top of its content.
+
+Unfortunately this seems to cause some issues that prevent the index view from detecting taps/clicks.
+
+As a workaround, there is also a `VStackPageView` variant, which stacks the index view below the content.
+
+This variant has no problems detecting taps, and is a better choice if you want the index view at the bottom of the content.  
